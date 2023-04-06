@@ -1,0 +1,98 @@
+<template>
+    
+
+        <!--This modal is for Suggested Task Comtainer-->
+        <div class="slds-m-top_small slds-p-bottom_small">
+            <lightning-card title="Search Tasks" icon-name="standard:account">
+            <lightning-layout multiple-rows="true" vertical-align="end">
+                <lightning-layout-item size="12" small-device-size="10" medium-device-size="8" large-device-size="6" padding="around-small">
+                    
+                    <div class="slds-form-element">
+                        <div class="slds-form-element__control">
+            
+                
+            <lightning-input type="text"
+            label="Task Search"
+            onchange={handleInputChange}
+            onkeypress={handleSearchButton}></lightning-input>
+
+</div>
+</div>
+</lightning-layout-item>
+                      
+    
+    <lightning-layout-item size="12" small-device-size="2" medium-device-size="2" large-device-size="2" padding="around-small">
+
+        <lightning-button label="Search"
+                        onclick={handleSearchClick}
+                        variant="brand"></lightning-button>
+                    </lightning-layout-item>
+
+
+</lightning-layout>
+</lightning-card>
+            
+</div>
+        <template if:true={tasks}>
+        <lightning-card title="Suggested Tasks">
+        <div class="slds-p-bottom_large">
+            <div class="slds-scrollable" style="height:10rem">
+           <lightning-datatable columns={taskColumns}
+                   key-field="id"
+                   onrowselection={handleRowSelection}
+                   data={tasks}>
+           </lightning-datatable>
+        </div>
+       </div>
+           
+           <lightning-layout-item>  
+            <lightning-button label="Previous" icon-name="utility:chevronleft" onclick={handlePrevious}  
+              disabled={showFirstButton}></lightning-button>  
+          </lightning-layout-item>  
+          <lightning-layout-item flexibility="grow"></lightning-layout-item>  
+          <lightning-layout-item>  
+            <lightning-button label="Next" icon-name="utility:chevronright" icon-position="right" onclick={handleNext}  
+              disabled={showLastButton}></lightning-button>  
+          </lightning-layout-item>  
+
+          <div class="slds-align_absolute-center">
+            <lightning-button class="slds-p-left_small" 
+                              label="Add Task" 
+                             disabled={isButtonDisabled}
+                              onclick={handleAssignSelectedTaskToProgram}>
+            </lightning-button>
+     
+            <lightning-button class="slds-p-left_small"
+                              label="New Task" 
+                               onclick={toggleNewTask}>
+            </lightning-button>
+        
+       </div>
+    </lightning-card>
+    <template if:true={taskShown}>
+       <lightning-card  title="New Task">
+           <lightning-record-edit-form object-api-name="Task__c"
+                                       onsuccess={handleSuccess}>
+               <lightning-input-field field-name="Name"> </lightning-input-field>
+               <lightning-input-field field-name="Level_of_Effort_Mins__c"> </lightning-input-field>
+               <lightning-input-field field-name="Number_of_days_to_complete_the_Task__c"> </lightning-input-field>
+               <lightning-input-field field-name="Audience_Type__c"> </lightning-input-field>
+               <lightning-input-field field-name="Description__c"> </lightning-input-field>
+               <lightning-input-field field-name="Task_URL__c"> </lightning-input-field>
+               <div class="slds-align_absolute-center">
+                   <lightning-button
+                       class="slds-m-top_small"
+                       type="submit"
+                       label="Save">
+                   </lightning-button>
+                   <lightning-button
+                       class="slds-m-top_small slds-p-left_small"
+                       label="Cancel"
+                       onclick={closeQuickAction}>
+                   </lightning-button>
+               </div>
+           </lightning-record-edit-form>
+       </lightning-card>
+    </template>
+    </template>
+</template>

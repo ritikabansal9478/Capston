@@ -1,0 +1,11 @@
+<template>
+    <lightning-card>
+        <div class="slds-p-left_small">
+            <lightning-datatable columns={columns} 
+                                 key-field="Id"
+                                 onrowselection={handleRowSelection}
+                                 data={timesheets}>
+            </lightning-datatable>
+        </div>
+    </lightning-card>    
+</template>

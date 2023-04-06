@@ -1,0 +1,120 @@
+<template>
+
+    <!--This modal is for Suggested Task Comtainer-->
+    <c-modal label="Suggested Task" 
+    onclick={toggleModal} >
+
+    <lightning-input type="text"
+                      label="Task Search"
+                      onchange={handleInputChange}
+                      onkeypress={handleSearchButton}></lightning-input>
+    <div class="slds-p-top_small">
+      <lightning-button label="Search"
+                        onclick={handleSearchClick}
+                        variant="brand"></lightning-button>
+    </div>
+
+    <template if:true={tasks}>
+    <lightning-card>
+    <div class="slds-p-bottom_large">
+       <lightning-datatable columns={taskColumns}
+               key-field="id"
+               onrowselection={handleRowSelection}
+               data={tasks}>
+       </lightning-datatable>
+   </div>
+   <div class="slds-align_absolute-center">
+       <lightning-button class="slds-p-left_small" 
+                         label="Add Task" 
+                        disabled={isButtonDisabled}
+                         onclick={handleAssignSelectedTaskToProgram}>
+       </lightning-button>
+
+       <lightning-button class="slds-p-left_small"
+                         label="New Task" 
+                          onclick={toggleNewTask}>
+       </lightning-button>
+   </div>
+</lightning-card>
+<template if:true={taskShown}>
+   <lightning-card  title="New Task">
+       <lightning-record-edit-form object-api-name="Task__c"
+                                   onsuccess={handleSuccess}>
+           <lightning-input-field field-name="Name"> </lightning-input-field>
+           <lightning-input-field field-name="Level_of_Effort_Mins__c"> </lightning-input-field>
+           <lightning-input-field field-name="Number_of_days_to_complete_the_Task__c"> </lightning-input-field>
+           <lightning-input-field field-name="Audience_Type__c"> </lightning-input-field>
+           <lightning-input-field field-name="Description__c"> </lightning-input-field>
+           <lightning-input-field field-name="Task_URL__c"> </lightning-input-field>
+           <div class="slds-align_absolute-center">
+               <lightning-button
+                   class="slds-m-top_small"
+                   type="submit"
+                   label="Save">
+               </lightning-button>
+               <lightning-button
+                   class="slds-m-top_small slds-p-left_small"
+                   label="Cancel"
+                   onclick={toggleModal}>
+               </lightning-button>
+           </div>
+       </lightning-record-edit-form>
+   </lightning-card>
+</template>
+</template>
+</c-modal>
+
+<div class="slds-m-top_small slds-p-bottom_small">
+     <!--This modal is for Search Task Comtainer-->
+     <lightning-card title="Search Tasks" icon-name="standard:account">
+        <div if:true={errorMsg} style="margin-left: 3%;">
+            <p style="color: red;">{errorMsg}</p>
+        </div>
+        <lightning-layout multiple-rows="true" vertical-align="end">
+            <lightning-layout-item size="12" small-device-size="10" medium-device-size="8" large-device-size="6" padding="around-small">
+                    <div class="slds-form-element">
+                            <div class="slds-form-element__control">
+                                    <lightning-input type="text" 
+                                                     label="Enter Task Name" 
+                                                     onchange={searchKeyword} ></lightning-input>
+                            </div>
+                        </div> 
+            </lightning-layout-item>
+            <lightning-layout-item size="12" small-device-size="2" medium-device-size="2" large-device-size="2" padding="around-small">
+                    <lightning-button label="Search" 
+                                      variant="brand" 
+                                      onclick={handleSearchKeyword}></lightning-button>
+                </lightning-layout-item>
+            </lightning-layout><br/>
+
+        <div if:true={searchData}>
+            <lightning-datatable data={searchData} 
+                                 columns={taskColumns} 
+                                 key-field="id"
+                                 hide-checkbox-column="true"></lightning-datatable>
+        </div>
+    </lightning-card>
+
+</div>
+    
+        <lightning-card title="Delete Selected Rows in Datatable" icon-name="utility:recycle_bin_full">
+            <div style="width: auto;">
+                <template if:true={data}>
+                    <lightning-datatable data={data} 
+                                        columns={columns} 
+                                        key-field="id" 
+                                        onrowselection={getSelectedRecords}>
+                    </lightning-datatable><br/>
+                    <div class="slds-align_absolute-center">
+                        <lightning-button label={buttonLabel} 
+                                          icon-name="utility:delete" 
+                                          disabled={isTrue}
+                                          variant="destructive" 
+                                          onclick={deleteRecords}>
+                        </lightning-button>
+                    </div>
+                </template>
+            </div>
+        </lightning-card>
+    </template>
+    

@@ -1,0 +1,23 @@
+<template>
+    
+    <lightning-button variant="brand"
+                       label={showTasks}
+                        onclick={handleClick}>
+    </lightning-button>
+
+     <!-- hide/show datatable-->
+    <template if:true={isVisble}>
+    <lightning-card title="LWC Functionality">
+
+    </lightning-card>
+    
+        <!--database section-->
+        <lightning-datatable
+        data={data}
+        columns={columns}
+        key-fields="id"
+        onrowselection={getSelectedRows}>
+    </lightning-datatable>
+</lightning-card>
+    </template>
+</template>

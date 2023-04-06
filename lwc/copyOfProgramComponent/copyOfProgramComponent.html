@@ -1,0 +1,58 @@
+    <template>
+        <!--This modal is for Suggested Task Comtainer-->
+    <!--<c-modal label="Suggested Task" 
+    onclick={toggleModal} >-->
+
+   <!--This modal is for Suggested Task Comtainer-->
+
+   <template if:true={tasks}>
+   <lightning-card>
+   <div class="slds-p-bottom_large">
+      <lightning-datatable columns={taskColumns}
+              key-field="id"
+              onrowselection={handleRowSelection}
+              data={tasks}>
+      </lightning-datatable>
+  </div>
+  <div class="slds-align_absolute-center">
+      <lightning-button class="slds-p-left_small" 
+                        label="Add Task" 
+                       disabled={isButtonDisabled}
+                        onclick={handleAssignSelectedTaskToProgram}>
+      </lightning-button>
+
+      <lightning-button class="slds-p-left_small"
+                        label="New Task" 
+                         onclick={toggleNewTask}>
+      </lightning-button>
+  </div>
+</lightning-card>
+<template if:true={taskShown}>
+  <lightning-card  title="New Task">
+      <lightning-record-edit-form object-api-name="Task__c"
+                                  onsuccess={handleSuccess}>
+          <lightning-input-field field-name="Name"> </lightning-input-field>
+          <lightning-input-field field-name="Level_of_Effort_Mins__c"> </lightning-input-field>
+          <lightning-input-field field-name="Number_of_days_to_complete_the_Task__c"> </lightning-input-field>
+          <lightning-input-field field-name="Audience_Type__c"> </lightning-input-field>
+          <lightning-input-field field-name="Description__c"> </lightning-input-field>
+          <lightning-input-field field-name="Task_URL__c"> </lightning-input-field>
+          <div class="slds-align_absolute-center">
+              <lightning-button
+                  class="slds-m-top_small"
+                  type="submit"
+                  label="Save">
+              </lightning-button>
+              <lightning-button
+                  class="slds-m-top_small slds-p-left_small"
+                  label="Cancel"
+                  onclick={handleCloseWindow}>
+              </lightning-button>
+          </div>
+      </lightning-record-edit-form>
+  </lightning-card>
+</template>
+</template>
+
+        </template>
+        

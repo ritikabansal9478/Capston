@@ -1,0 +1,21 @@
+<template>
+    <lightning-card title="Delete Selected Rows in Datatable" icon-name="utility:recycle_bin_full">
+        <div style="width: auto;">
+            <template if:true={data}>
+                <lightning-datatable data={data} 
+                                    columns={columns} 
+                                    key-field="id" 
+                                    onrowselection={getSelectedRecords}>
+                </lightning-datatable><br/>
+                <div class="slds-align_absolute-center">
+                    <lightning-button label={buttonLabel} 
+                                      icon-name="utility:delete" 
+                                      disabled={isTrue}
+                                      variant="destructive" 
+                                      onclick={deleteRecords}>
+                    </lightning-button>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>
